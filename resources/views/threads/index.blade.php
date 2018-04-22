@@ -6,20 +6,26 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        Forum Threads
+                        Forum
+                        Threads
                     </div>
 
                     <div class="card-body">
                         @foreach ($threads as $thread)
                             <article>
-                                <h4>
+                                <div class="level">
+                                    <h4 class="flex">
+                                        <a href="{{ $thread->path() }}">
+                                            {{ $thread->title }}
+                                        </a>
+                                    </h4>
                                     <a href="{{ $thread->path() }}">
-                                        {{ $thread->title }}
-                                    </a>
-                                </h4>
+                                        {{ $thread->replies_count }} {{str_plural('reply', $thread->replies_count) }}</a>
+                                </div>
                                 <div class="body"> {{ $thread->body }}</div>
+
                             </article>
-                        <hr>
+                            <hr>
                         @endforeach
                     </div>
                 </div>

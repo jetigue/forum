@@ -76,7 +76,10 @@ class ThreadController extends Controller {
      */
     public function show($channelId, Thread $thread)
     {
-        return view('threads.show', compact('thread'));
+        return view('threads.show', [
+            'thread' => $thread,
+            'replies' => $thread->replies()->paginate(5)
+        ]);
     }
 
     /**
@@ -120,16 +123,14 @@ class ThreadController extends Controller {
      */
     protected function getThreads(Channel $channel, ThreadFilters $filters)
     {
-        $threads = Thread::latest()->filter($filters);
+        $threads = Thread::filter($filters)->latest();
 
         if ($channel->exists)
         {
             $threads->where('channel_id', $channel->id);
         }
 
-        $threads = $threads->get();
-
-        return $threads;
+        return $threads->get();
     }
 
 }

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Reply extends Model
 {
 
+    use Favoritable;
+
     /**
      * @var array
      */
@@ -14,8 +16,11 @@ class Reply extends Model
         'body', 'user_id'
     ];
 
+    protected $with = ['owner', 'favorites'];
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
 }
