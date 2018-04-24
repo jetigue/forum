@@ -7,20 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 class Reply extends Model
 {
 
-    use Favoritable;
+    use Favoritable, RecordsActivity;
 
     /**
      * @var array
      */
-    protected $fillable = [
-        'body', 'user_id'
-    ];
+    protected $guarded = [];
 
     protected $with = ['owner', 'favorites'];
 
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class, 'thread_id');
     }
 
 }

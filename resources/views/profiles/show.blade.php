@@ -2,36 +2,21 @@
 
 @section('content')
     <div class="container">
-        <div class="jumbotron">
-            <h1>
+        <div>
+            <h1 class="display-3">
                 {{ $profileUser->name }}
             </h1>
-            <h5 class="pl-3">
-                Since {{ $profileUser->created_at->diffForHumans() }}
-            </h5>
 
         </div>
-
-        @foreach ($threads as $thread)
-            <div class="card mb-4">
-                <div class="card-header">
-                    <div class="level">
-                        <span class="flex">
-                            <a href="#">{{ $thread->creator->name }}</a> posted:
-                            {{ $thread->title }}
-                        </span>
-
-                        <span>{{ $thread->created_at->diffForHumans() }}</span>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    {{ $thread->body }}
-                </div>
-            </div>
+        <hr>
+        @foreach ($activities as $date => $activity)
+            <h3>{{$date}}</h3>
+            @foreach ($activity as $record)
+                @include ("profiles.activities.{$record->type}", ['activity' => $record])
+            @endforeach
         @endforeach
 
-        {{ $threads->Links() }}
+{{--        {{ $threads->Links() }}--}}
 
     </div>
 
